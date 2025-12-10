@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: contactmanager-sql
+    environment:
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    networks:
+      - contactmanager-network
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    restart: unless-stopped
+
+networks:
+  contactmanager-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:
